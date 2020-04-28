@@ -4,11 +4,11 @@
 MakeProducts.stuff = [];
 var randomArray = [];
 
-function MakeProducts(name, img) {
+function MakeProducts(name, img, clickCount = 0, totalShown = 0) {
   this.name = name;
   this.img = img;
-  this.clickCount = 0;
-  this.totalShown = 0;
+  this.clickCount = clickCount;
+  this.totalShown = totalShown;
   MakeProducts.stuff.push(this);
 }
 
@@ -29,13 +29,12 @@ MakeProducts.prototype.render = function()  {
 
 }
 
-  var tempArray = [];
+var tempArray = [];
 function makeRandomArray() {
-  // debugger
+
   var randomArray = [];
 
 
-  do {
     
     var random = Math.floor(Math.random() * MakeProducts.stuff.length);
     randomArray.push(random);
@@ -56,13 +55,10 @@ function makeRandomArray() {
     for (var i = 0; i < 3; i++){
       MakeProducts.stuff[randomArray[i]].render();
   }
+}
   console.log(tempArray);
   console.log(randomArray);
 
-}
-    while(tempArray === randomArray)
-
-}
 
 function printMakeProducts()  {
 
@@ -72,32 +68,7 @@ function printMakeProducts()  {
 
  
   makeRandomArray();
-
-  
-
-
-  
  
-    
-
-    // 1. Create Array
-    // 2. Make a random number
-    // 3. Store number in array
-    //4. Make another number
-    //5. while (randomArray[0] === random)
-            //if statemnt
-            //if true, rerun
-            //if false move on
-              //store in array
-    //6. make another number
-    //7. while (randomArray[0] || randomArray[1])
-            //if statment
-            //...
-            //...
-    //7.5  while checks condition of temp array 
-    //8.  push random Array into temp array
-
-
 
 }
 
@@ -136,10 +107,15 @@ function clickHandler(event) {
         MakeProducts.stuff[i].clickCount++;
     } 
   }
+
   printMakeProducts();
+ 
 } else  {
+  var stringProducts = JSON.stringify(MakeProducts.stuff);
+  localStorage.setItem('allProducts', stringProducts);
   removeImages();
   // finalTally();
+
   chart();
   
 
@@ -293,7 +269,11 @@ function chart()  {
 
 
 
-
+if (localStorage.getItem('allProducts')) {
+  var parseProducts = localStorage.getItem('allProducts')
+  MakeProducts.stuff = JSON.parse(parseProducts);
+  chart();
+} else  {
 var bagProduct = new MakeProducts('Bag', 'assets/bag.jpg');
 var bananaProduct = new MakeProducts('Banana', 'assets/banana.jpg')
 var bathroomProduct = new MakeProducts('Bathroom', 'assets/bathroom.jpg');
@@ -314,8 +294,26 @@ var unicornProduct = new MakeProducts('Unicorn', 'assets/unicorn.jpg');
 var usbProduct = new MakeProducts('Usb', 'assets/usb.gif');
 var waterCanProduct = new MakeProducts('Water Can', 'assets/water-can.jpg');
 var wineGlassProduct = new MakeProducts('Wine Glass', 'assets/wine-glass.jpg');
-
+}
 
 printMakeProducts();
 
 
+
+
+
+
+
+//Store constructor in local memory
+//check if info has been stored
+  //if local storage exists
+//parse it
+//
+  //else if doesnt
+//instantiate all products
+//re construct
+
+//localstorage.getItem('allProducts') = var1
+//var2 = JSON.parse(var1)
+  //var2 is the array of primitive objects. no methods
+//for loop to run the values of the var2 array through the constructor all over again.
